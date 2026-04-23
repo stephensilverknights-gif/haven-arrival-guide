@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+
+  /* Cream palette — from the arrival-guide mockup */
+  --color-cream:       #F9F5EF;
+  --color-warm-white:  #FDFBF8;
+  --color-stone:       #C4B9A8;
+  --color-sage:        #8A9E8C;
+  --color-charcoal:    #2C2C2A;
+  --color-mid:         #6B6560;
+  --color-accent:      #B8956A;
+  --color-divider:     rgba(196,185,168,0.35);
+
+  --radius-card:   16px;
+  --radius-input:  10px;
+  --radius-pill:   100px;
+}
+
+/* Bridge Shadcn CSS variables to Tailwind v4 color tokens.
+   Shadcn components reference bg-background, bg-card, etc., which expand
+   to --color-background, --color-card, etc. @theme inline lets us tie
+   those to the HSL variables in :root below. */
+@theme inline {
+  --color-background:            hsl(var(--background));
+  --color-foreground:            hsl(var(--foreground));
+  --color-card:                  hsl(var(--card));
+  --color-card-foreground:       hsl(var(--card-foreground));
+  --color-popover:               hsl(var(--popover));
+  --color-popover-foreground:    hsl(var(--popover-foreground));
+  --color-primary:               hsl(var(--primary));
+  --color-primary-foreground:    hsl(var(--primary-foreground));
+  --color-secondary:             hsl(var(--secondary));
+  --color-secondary-foreground:  hsl(var(--secondary-foreground));
+  --color-muted:                 hsl(var(--muted));
+  --color-muted-foreground:      hsl(var(--muted-foreground));
+  --color-accent-shadcn:         hsl(var(--accent));
+  --color-accent-foreground:     hsl(var(--accent-foreground));
+  --color-destructive:           hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border:                hsl(var(--border));
+  --color-input:                 hsl(var(--input));
+  --color-ring:                  hsl(var(--ring));
+}
+
+/* Shadcn tokens — light / cream theme */
+:root {
+  --background: 34 47% 96%;         /* cream #F9F5EF */
+  --foreground: 60 4% 17%;          /* charcoal #2C2C2A */
+  --card: 36 47% 98%;               /* warm-white #FDFBF8 */
+  --card-foreground: 60 4% 17%;
+  --popover: 36 47% 98%;
+  --popover-foreground: 60 4% 17%;
+  --primary: 30 30% 57%;            /* accent #B8956A */
+  --primary-foreground: 36 47% 98%;
+  --secondary: 120 9% 58%;          /* sage #8A9E8C */
+  --secondary-foreground: 36 47% 98%;
+  --muted: 34 25% 85%;
+  --muted-foreground: 30 5% 40%;    /* mid #6B6560 */
+  --accent: 34 25% 88%;
+  --accent-foreground: 60 4% 17%;
+  --destructive: 0 65% 52%;
+  --destructive-foreground: 36 47% 98%;
+  --border: 34 27% 77%;
+  --input: 34 27% 80%;
+  --ring: 30 30% 57%;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+
+  #root {
+    min-height: 100svh;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Arrival-guide hero gradient-fallback for units without an image */
+.hero-gradient-fallback {
+  background: linear-gradient(160deg, #d4c9b8 0%, #b8a896 50%, #9e8e7c 100%);
+}
+
+/* Hero image overlay */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(44, 44, 42, 0.08) 0%,
+    rgba(44, 44, 42, 0.55) 100%
+  );
+}
