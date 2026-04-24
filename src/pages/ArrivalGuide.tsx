@@ -1,16 +1,21 @@
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useUnit } from '@/hooks/useUnit'
-import { Hero } from '@/components/guest/Hero'
-import { WelcomeCard } from '@/components/guest/WelcomeCard'
-import { InfoPills } from '@/components/guest/InfoPills'
-import { StepList } from '@/components/guest/StepList'
-import { VideoSection } from '@/components/guest/VideoSection'
-import { Footer } from '@/components/guest/Footer'
+import { Landing } from '@/components/guest/Landing'
+import { GuideView } from '@/components/guest/GuideView'
+import { VideoView } from '@/components/guest/VideoView'
 import NotFound from './NotFound'
+
+type View = 'landing' | 'guide' | 'video'
 
 export default function ArrivalGuide() {
   const { slug } = useParams<{ slug: string }>()
   const { data: unit, isLoading, error } = useUnit(slug)
+  const [view, setView] = useState<View>('landing')
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [view])
 
   if (isLoading) {
     return (
@@ -27,25 +32,43 @@ export default function ArrivalGuide() {
     return <NotFound />
   }
 
+  const goLanding = () => setView('landing')
+  const goGuide = () => setView('guide')
+  const goVideo = () => setView('video')
+
   return (
     <main
       className="mx-auto max-w-[560px] pb-0"
       style={{ background: 'var(--color-cream)' }}
     >
-      <Hero
-        name={unit.name}
-        address={unit.address}
-        imageUrl={unit.hero_image_url}
-      />
-      <WelcomeCard message={unit.welcome_message} />
-      <InfoPills
-        wifiName={unit.wifi_name}
-        wifiPassword={unit.wifi_password}
-        quietHours={unit.quiet_hours}
-      />
-      <StepList steps={unit.arrival_steps} />
-      <VideoSection youtubeId={unit.youtube_id} isShort={unit.youtube_is_short} />
-      <Footer />
+      {view === 'landing' && (
+        <Landing
+          name={unit.name}
+          address={unit.address}
+          imageUrl={unit.hero_image_url}
+          hasVideo={Boolean(unit.youtube_id)}
+          onOpenGuide={goGuide}
+          onOpenVideo={goVideo}
+        />
+      )}
+
+      {view === 'guide' && (
+        <GuideView
+          unit={unit}
+          onBack={goLanding}
+          onOpenVideo={goVideo}
+        />
+      )}
+
+      {view === 'video' && unit.youtube_id && (
+        <VideoView
+          name={unit.name}
+          youtubeId={unit.youtube_id}
+          isShort={unit.youtube_is_short ?? false}
+          onBack={goLanding}
+          onOpenGuide={goGuide}
+        />
+      )}
     </main>
   )
 }

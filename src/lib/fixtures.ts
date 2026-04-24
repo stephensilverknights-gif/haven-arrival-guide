@@ -24,7 +24,7 @@ const theLocalSteps: UnitWithSteps['arrival_steps'] = [
   ['Step 14 · Bedroom', 'Anything notable about the bedroom setup.', null],
   ['Step 15 · TV & streaming', 'How to use the TV. Remote location, streaming logins if any.', null],
   ['Step 16 · Trash & recycling', 'Where trash and recycling go.', null],
-  ["Step 17 · You're settled in", "Welcome to The Local. If anything feels off, text us — we're local and responsive.", null],
+  ["Step 17 · You're settled in", "Welcome to The Local — make yourself at home.", null],
 ].map(([label, body, door_code], i) => ({
   id: `fx-${i + 1}`,
   unit_id: 'fixture-the-local',
@@ -45,7 +45,7 @@ export const fixtureUnits: Record<string, UnitWithSteps> = {
     address: '250 East Myrtle, Boise, ID',
     hero_image_url: null,
     welcome_message:
-      "Welcome to The Local. <strong>Everything you need to get into unit 620 is below</strong> — follow the steps in order and you'll be settled in no time. Text us if anything feels off.",
+      "Welcome to The Local. <strong>Everything you need to get into unit 620 is below</strong> — follow the steps in order and you'll be settled in no time.",
     wifi_name: 'WhiteSky-TheLocal',
     wifi_password: 'kxpcva5d',
     youtube_id: 'RjJ3hye5wto',
